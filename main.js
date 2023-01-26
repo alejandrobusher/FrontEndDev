@@ -3,9 +3,10 @@ const desktopMenu = document.querySelector(".desktop-menu")
 const burgerMenu = document.querySelector(".menu")
 const mobileMenu = document.querySelector(".mobile-menu")
 const menuCarrito = document.querySelector(".navbar-shopping-cart")
-const aside = document.querySelector(".product-detail")
+const shoppingCartContainer = document.querySelector("#shopping-cart-container")
 const productList = []
 const cardsContainer = document.querySelector(".cards-container")
+const mainContainer = document.querySelector(".main-container");
 
 
 menuEmail.addEventListener("click", toggleDesktopMenu)
@@ -13,20 +14,20 @@ burgerMenu.addEventListener("click", toggleMobileMenu)
 menuCarrito.addEventListener("click", toggleCarritoAside)
 
 function toggleDesktopMenu() {
-    const isAsideClosed = aside.classList.contains("inactive")
+    const isAsideClosed = shoppingCartContainer.classList.contains("inactive")
     
     if (!isAsideClosed) {
-        aside.classList.add("inactive")
+        shoppingCartContainer.classList.add("inactive")
     }
 
     desktopMenu.classList.toggle("inactive")
 }
 
 function toggleMobileMenu() {
-    const isAsideClosed = aside.classList.contains("inactive")
+    const isAsideClosed = shoppingCartContainer.classList.contains("inactive")
 
     if (!isAsideClosed) {
-        aside.classList.add("inactive")
+        shoppingCartContainer.classList.add("inactive")
     }
     mobileMenu.classList.toggle("inactive")
 }
@@ -43,8 +44,23 @@ function toggleCarritoAside() {
         desktopMenu.classList.add("inactive")
     }
 
-    aside.classList.toggle("inactive")
+    shoppingCartContainer.classList.toggle("inactive")
 }
+
+function closeMenus() {
+    const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
+    const isDesktopMenuClosed = desktopMenu.classList.contains('inactive')
+    const isMenuCarritoClosed = shoppingCartContainer.classList.contains('inactive');
+    
+    if (!isMobileMenuClosed || !isDesktopMenuClosed || !isMenuCarritoClosed )  {
+
+        mobileMenu.classList.add("inactive");
+        desktopMenu.classList.add("inactive");   
+        shoppingCartContainer.classList.add("inactive");
+    }
+}
+  
+mainContainer.addEventListener('click', closeMenus);
 
 productList.push({
     name: "Scooter",
