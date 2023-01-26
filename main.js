@@ -3,7 +3,9 @@ const desktopMenu = document.querySelector(".desktop-menu")
 const burgerMenu = document.querySelector(".menu")
 const mobileMenu = document.querySelector(".mobile-menu")
 const menuCarrito = document.querySelector(".navbar-shopping-cart")
+const productDetailCloseIcon = document.querySelector(".product-detail-close")
 const shoppingCartContainer = document.querySelector("#shopping-cart-container")
+const productDetailContainer = document.querySelector("#product-detail")
 const productList = []
 const cardsContainer = document.querySelector(".cards-container")
 const mainContainer = document.querySelector(".main-container");
@@ -12,12 +14,16 @@ const mainContainer = document.querySelector(".main-container");
 menuEmail.addEventListener("click", toggleDesktopMenu)
 burgerMenu.addEventListener("click", toggleMobileMenu)
 menuCarrito.addEventListener("click", toggleCarritoAside)
+productDetailCloseIcon.addEventListener("click", closeProductDetailAside)
 
 function toggleDesktopMenu() {
     const isAsideClosed = shoppingCartContainer.classList.contains("inactive")
+    const isProductDetailContainerClosed = productDetailContainer.classList.contains("inactive")
     
-    if (!isAsideClosed) {
+    
+    if (!isAsideClosed || !isProductDetailContainerClosed) {
         shoppingCartContainer.classList.add("inactive")
+        productDetailContainer.classList.add("inactive")
     }
 
     desktopMenu.classList.toggle("inactive")
@@ -25,22 +31,24 @@ function toggleDesktopMenu() {
 
 function toggleMobileMenu() {
     const isAsideClosed = shoppingCartContainer.classList.contains("inactive")
+    const isProductDetailContainerClosed = productDetailContainer.classList.contains("inactive")
 
-    if (!isAsideClosed) {
+    if (!isAsideClosed || !isProductDetailContainerClosed) {
         shoppingCartContainer.classList.add("inactive")
+        productDetailContainer.classList.add("inactive")
     }
+
     mobileMenu.classList.toggle("inactive")
 }
 
 function toggleCarritoAside() {
     const isMobileMenuClosed = mobileMenu.classList.contains("inactive")
     const isDesktopMenuClosed = desktopMenu.classList.contains("inactive")
+    const isProductDetailContainerClosed = productDetailContainer.classList.contains("inactive")
     
-    if (!isMobileMenuClosed) {
+    if (!isMobileMenuClosed || !isProductDetailContainerClosed || !isDesktopMenuClosed) {
         mobileMenu.classList.add("inactive")
-    }
-
-    if (!isDesktopMenuClosed) {
+        productDetailContainer.classList.add("inactive")
         desktopMenu.classList.add("inactive")
     }
 
@@ -48,19 +56,27 @@ function toggleCarritoAside() {
 }
 
 function closeMenus() {
-    const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
+    const isMobileMenuClosed = mobileMenu.classList.contains('inactive')
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive')
-    const isMenuCarritoClosed = shoppingCartContainer.classList.contains('inactive');
+    const isMenuCarritoClosed = shoppingCartContainer.classList.contains('inactive')
     
-    if (!isMobileMenuClosed || !isDesktopMenuClosed || !isMenuCarritoClosed )  {
+    if (!isMobileMenuClosed || !isDesktopMenuClosed || !isMenuCarritoClosed)  {
 
-        mobileMenu.classList.add("inactive");
-        desktopMenu.classList.add("inactive");   
-        shoppingCartContainer.classList.add("inactive");
+        mobileMenu.classList.add("inactive")
+        desktopMenu.classList.add("inactive")   
+        shoppingCartContainer.classList.add("inactive")
     }
 }
   
 mainContainer.addEventListener('click', closeMenus);
+
+function openProductDetailAside() {
+    productDetailContainer.classList.remove("inactive")
+}
+
+function closeProductDetailAside() {
+    productDetailContainer.classList.add("inactive")
+}
 
 productList.push({
     name: "Scooter",
@@ -95,6 +111,7 @@ function renderProducts(arr) {
     
         const productImg = document.createElement("img")
         productImg.setAttribute("src", product.image)
+        productImg.addEventListener("click", openProductDetailAside)
     
         const productInfo = document.createElement("div")
         productInfo.classList.add("product-info")
